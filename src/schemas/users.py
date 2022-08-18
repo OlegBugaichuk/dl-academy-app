@@ -3,10 +3,10 @@ from enum import IntEnum
 
 
 class UserType(IntEnum):
-    owner = 1
-    lector = 2
-    mentor = 3
-    student = 4
+    OWNER = 1
+    LECTOR = 2
+    MENTOR = 3
+    STUDENT = 4
 
 
 class UserBase(BaseModel):
@@ -18,7 +18,8 @@ class UserBase(BaseModel):
     type: UserType = UserType.student
 
 
-class UserNew(UserBase):
+class UserNew(BaseModel):
+    email: EmailStr
     password: str
     confirm_password: str
 
@@ -36,3 +37,7 @@ class User(UserBase):
 
     class Config:
         orm_mode = True
+
+
+class Token(BaseModel):
+    token: 
