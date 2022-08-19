@@ -1,5 +1,7 @@
-from pydantic import BaseModel, EmailStr, root_validator
 from enum import IntEnum
+
+from fastapi import Form
+from pydantic import BaseModel, EmailStr, root_validator
 
 
 class UserType(IntEnum):
@@ -15,29 +17,41 @@ class UserBase(BaseModel):
     phone: str
     email: EmailStr
     patronomyc: str = ""
-    type: UserType = UserType.student
+    type: UserType = UserType.STUDENT
 
 
-class UserNew(BaseModel):
-    email: EmailStr
-    password: str
-    confirm_password: str
+class SignIn():
+    def __init__(self, email: str = Form(), password: str = Form()):
+        self.email = email
+        self.password = password
 
-    @root_validator
-    def check_passwords_match(cls, values):
-        pw1, pw2 = values.get('password'), values.get('confirm_password')
-        if pw1 is not None and pw2 is not None and pw1 != pw2:
-            raise ValueError('passwords do not match')
-        return values
+
+class SignUp(SignIn):
+    def __init__(self,
+                 email: str = Form(),
+                 password: str = Form(),
+                 confirm_password: str = Form()):
+
+        self.confirm_password = confirm_password
+        super().__init__(email, password)
+
+    # @root_validator
+    # def check_passwords_match(cls, values):
+    #     pw1, pw2 = values.get('password'), values.get('confirm_password')
+    #     if pw1 is not None and pw2 is not None and pw1 != pw2:
+    #         raise ValueError('passwords do not match')
+    #     return values
 
 
 class User(UserBase):
     id: int
     hashed_password: str
+    active: str = False
 
     class Config:
         orm_mode = True
 
 
 class Token(BaseModel):
-    token: 
+    token: str
+    token_type: str = 'Bearer'

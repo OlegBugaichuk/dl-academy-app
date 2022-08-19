@@ -35,3 +35,6 @@ pytest==7.1.2
 
 # email
 postmarker==1.0
+
+# fake data
+Faker==14.1.0
