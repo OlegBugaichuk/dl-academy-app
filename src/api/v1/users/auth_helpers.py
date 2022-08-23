@@ -16,11 +16,13 @@ def verify_hash(raw_string: str, hash: str) -> bool:
     return pwd_context.verify(raw_string, hash)
 
 
-def create_access_token(data: dict,
+def create_access_token(user_email: str,
                         expires_delta: int = ACCESS_TOKEN_EXPIRE_MINUTES):
 
-    to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(minutes=expires_delta)
-    to_encode.update({"exp": expire})
+    to_encode = {
+        "sub": user_email,
+        "exp": expire
+    }
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt

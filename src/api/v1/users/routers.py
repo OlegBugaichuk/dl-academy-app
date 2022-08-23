@@ -51,7 +51,7 @@ async def signin(data: SignIn = Depends(), confirmation_code: str = ''):
         if not user.active:
             user.active = True
 
-        access_token = create_access_token({"sub": user.email})
+        access_token = create_access_token(user.email)
         return Token(token=access_token)
 
     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
