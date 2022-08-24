@@ -32,9 +32,17 @@ watchgod==0.8.2
 websockets==10.3
 pytest==7.1.2
 
+# db
+SQLAlchemy==1.4.40
+alembic==1.8.1
+
+# dev
+aiosqlite==0.17.0
+
 
 # email
 postmarker==1.0
 
 # fake data
 Faker==14.1.0
+

@@ -1,10 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+
 from src.crud.users import get_user_by_email, get_user_by_id, get_users_list
 from src.schemas.users import SignIn, SignUp, Token, UserBase, User
 
 from .auth_helpers import create_access_token, verify_hash
 from .email_services import signup_confirm_email_send
 from .depends import get_current_user
+
 
 users_router = APIRouter(prefix='/users')
 
