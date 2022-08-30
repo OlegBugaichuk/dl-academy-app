@@ -1,28 +1,32 @@
 from typing import Union
+
+from pydantic import parse_obj_as
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from pydantic import parse_obj_as
-
-from src.schemas.users import User, UserBase, SignUp
-from src.models.users import User as UserModel
 from src.api.v1.users.auth_helpers import get_hash
+from src.models.users import User as UserModel
+from src.schemas.users import SignUp, User, UserBase
 
 
 async def get_users_list(db: AsyncSession) -> list[UserBase]:
     users = await db.execute(select(UserModel))
     users = users.scalars().all()
-    return parse_obj_as(list[UserBase], users)
+    return [UserBase.from_orm(user) for user in users]
 
 
 async def get_user_by_email(db: AsyncSession, email: str) -> Union[User, None]:
-    user_in_db = await db.query(UserModel).filter(UserModel.email == email).first()
+    user_in_db = await db.execute(
+        select(UserModel).where(UserModel.email==email)
+    )
+    user_in_db = user_in_db.scalars().first()
     if not user_in_db:
         return None
     return User.from_orm(user_in_db)
 
 
 async def get_user_by_id(db: AsyncSession, id: int) -> Union[UserBase, None]:
-    user_in_db = await db.query(UserModel).get(id)
+    user_in_db = await db.execute(select(UserModel).where(UserModel.id==id))
+    user_in_db = user_in_db.scalars().first()
     if not user_in_db:
         return None
     return User.from_orm(user_in_db)

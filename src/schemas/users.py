@@ -19,6 +19,8 @@ class UserBase(BaseModel):
     patronomyc: str = ""
     type: UserType = UserType.STUDENT
 
+    class Config:
+        orm_mode = True
 
 class SignIn(BaseModel):
     email: EmailStr
