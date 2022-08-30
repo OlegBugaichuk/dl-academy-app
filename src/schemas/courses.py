@@ -1,55 +1,57 @@
 from pydantic import BaseModel
 
 
+# Base class
 class CourseBase(BaseModel):
     title: str
-    description: str = ""
+    description: str
 
 
-class ModuleBase(BaseModel):
-    title: str
-    description: str = ""
-
-
-class LessonBase(BaseModel):
-    title: int
-    description: int = ""
-
-
-class LessonNew(LessonBase):
-    module_id: int
-
-
-class ModuleNew(ModuleBase):
-    course_id: int
-
-
+# Course =====
 class CourseNew(CourseBase):
     pass
 
 
-class Lesson(LessonBase):
-    id: int
-
-    class Config:
-        orm_mode = True
-
-
-class LessonDetail(Lesson):
-    content: str
-
-
-class Module(ModuleBase):
-    id: int
-    lessons: list[Lesson]
-
-    class Config:
-        orm_mode = True
-
-
 class Course(CourseBase):
     id: int
-    modules: list[Module]
 
     class Config:
         orm_mode = True
+
+
+# Module =====
+class ModuleNew(CourseBase):
+    price: float
+
+
+class Module(ModuleNew):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+# Lesson =====
+class LessonNew(CourseBase):
+    content: str
+    module_id: int
+
+
+class Lesson(LessonNew):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+class LessonShort(CourseBase):
+    id: int
+
+
+# Rel schemas =====
+class ModuleLessons(Module):
+    lessons = list[LessonShort]
+
+
+class CourseModules(Course):
+    modules = list[ModuleLessons]

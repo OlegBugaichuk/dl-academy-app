@@ -3,11 +3,12 @@ from pydantic import BaseModel
 
 class GroupBase(BaseModel):
     number: str
-
-
-class GoupNew(GroupBase):
-    course_id: int
     lector_id: int
+    course_id: int
+
+
+class NewGroup(GroupBase):
+    pass
 
 
 class Group(GroupBase):

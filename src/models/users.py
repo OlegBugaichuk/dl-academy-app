@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
-from sqlalchemy.orm import relationship, backref
-
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy.orm import backref, relationship
 from src.db.base import Base
+
 
 class User(Base):
     __tablename__ = 'users'
@@ -18,3 +18,9 @@ class User(Base):
     mentor_id = Column(Integer, ForeignKey('users.id'))
     students = relationship('User',
                             backref=backref('mentor', remote_side=[id]))
+
+    lector_groups = relationship('Group', backref='lector')
+
+    groups = relationship('Group',
+                          secondary='groups_students',
+                          backref='students')

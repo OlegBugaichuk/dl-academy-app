@@ -22,6 +22,7 @@ class UserBase(BaseModel):
     class Config:
         orm_mode = True
 
+
 class SignIn(BaseModel):
     email: EmailStr
     password: str
