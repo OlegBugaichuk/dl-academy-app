@@ -26,10 +26,11 @@ HASH_ALGORITHM=...
 ACCESS_TOKEN_EXPIRE_MINUTES=...
 ```
 
+## Run migrations
+
+`alembic upgrade head`
+
 ## Run
 
 `uvicorn src.main:app`
 
-## Run migrations
-
-`alembic upgrade head`
