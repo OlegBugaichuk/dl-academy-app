@@ -1,6 +1,5 @@
 from typing import Union
 
-from pydantic import parse_obj_as
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.api.v1.users.auth_helpers import get_hash

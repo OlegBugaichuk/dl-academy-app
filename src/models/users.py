@@ -19,8 +19,8 @@ class User(Base):
     students = relationship('User',
                             backref=backref('mentor', remote_side=[id]))
 
-    lector_groups = relationship('Group', backref='lector')
+    lector_groups = relationship('Group', back_populates='lector')
 
     groups = relationship('Group',
                           secondary='groups_students',
-                          backref='students')
+                          back_populates='students')

@@ -9,16 +9,16 @@ groups_students = Table('groups_students',
 
 
 class Group(Base):
-    __tablename__ = 'users'
+    __tablename__ = 'groups'
     id = Column(Integer, primary_key=True)
     number = Column(String(5))
 
     lector_id = Column(Integer, ForeignKey('users.id'))
-    lector = relationship('User', backref='lector_groups')
+    lector = relationship('User', back_populates='lector_groups')
 
     course_id = Column(Integer, ForeignKey('courses.id'))
-    course = relationship('Course', backref='groups')
+    course = relationship('Course', back_populates='groups')
 
     students = relationship('User',
                             secondary='groups_students',
-                            backref='groups')
+                            back_populates='groups')

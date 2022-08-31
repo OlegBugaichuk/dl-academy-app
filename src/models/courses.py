@@ -13,11 +13,11 @@ class Course(Base):
     title = Column(String(40))
     description = Column(String(50))
     
-    groups = relationship('Group', backref='course')
+    groups = relationship('Group', back_populates='course')
 
     modules = relationship('Module',
                            secondary='courses_modules',
-                           backref='courses')
+                           back_populates='courses')
 
 
 class Module(Base):
@@ -29,9 +29,9 @@ class Module(Base):
     
     courses = relationship('Course',
                            secondary='courses_modules',
-                           backref='modules')
+                           back_populates='modules')
 
-    lessons = relationship('Lesson', backref='module')
+    lessons = relationship('Lesson', back_populates='module')
 
 
 class Lesson(Base):
@@ -40,4 +40,4 @@ class Lesson(Base):
     title = Column(String(40))
     description = Column(String(50))
     module_id = Column(Integer, ForeignKey('modules.id'))
-    module = relationship('Module', backref='lessons')
+    module = relationship('Module', back_populates='lessons')
