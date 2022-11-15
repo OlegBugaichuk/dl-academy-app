@@ -15,7 +15,7 @@ async def get_users_list(db: AsyncSession) -> list[UserBase]:
 
 async def get_user_by_email(db: AsyncSession, email: str) -> Union[User, None]:
     user_in_db = await db.execute(
-        select(UserModel).where(UserModel.email==email)
+        select(UserModel).where(UserModel.email == email)
     )
     user_in_db = user_in_db.scalars().first()
     if not user_in_db:
@@ -24,7 +24,7 @@ async def get_user_by_email(db: AsyncSession, email: str) -> Union[User, None]:
 
 
 async def get_user_by_id(db: AsyncSession, id: int) -> Union[UserBase, None]:
-    user_in_db = await db.execute(select(UserModel).where(UserModel.id==id))
+    user_in_db = await db.execute(select(UserModel).where(UserModel.id == id))
     user_in_db = user_in_db.scalars().first()
     if not user_in_db:
         return None

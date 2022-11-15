@@ -32,5 +32,3 @@ async def get_current_user(credentials: HTTP_A_C = Depends(security),
     if user is None:
         raise CREDENTIALS_EXCEPTION
     return user
-
-

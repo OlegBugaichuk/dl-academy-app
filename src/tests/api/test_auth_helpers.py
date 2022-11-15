@@ -1,6 +1,6 @@
 from jose import jwt
 from passlib.context import CryptContext
-from src.core.settings import ALGORITHM, SECRET_KEY
+from src.core.settings import settings
 from src.api.v1.users.auth_helpers import (get_hash, verify_hash,
                                            create_access_token)
 
@@ -24,7 +24,9 @@ def test_verify_hash():
 def test_create_access_token():
     test_user_email = 'test@test.com'
     access_token = create_access_token(test_user_email)
-    token_data = jwt.decode(access_token, SECRET_KEY, algorithms=[ALGORITHM])
-    
+    token_data = jwt.decode(access_token,
+                            settings.secret_key,
+                            algorithms=[settings.hash_algorithm])
+
     assert token_data.get('sub') == test_user_email
     assert token_data.get('exp') is not None

@@ -13,7 +13,9 @@ async def get_groups_list(db: AsyncSession) -> list[Group]:
 
 
 async def get_group_by_id(db: AsyncSession, id: int) -> Union[Group, None]:
-    group_in_db = await db.execute(select(GroupModel).where(GroupModel.id==id))
+    group_in_db = await db.execute(
+        select(GroupModel).where(GroupModel.id == id)
+    )
     group_in_db = group_in_db.scalars().first()
     if not group_in_db:
         return None

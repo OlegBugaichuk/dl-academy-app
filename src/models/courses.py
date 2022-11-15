@@ -7,12 +7,13 @@ courses_modules = Table('courses_modules',
                         Column('course_id', ForeignKey('courses.id')),
                         Column('module_id', ForeignKey('modules.id')))
 
+
 class Course(Base):
     __tablename__ = 'courses'
     id = Column(Integer, primary_key=True)
     title = Column(String(40))
     description = Column(String(50))
-    
+
     groups = relationship('Group', back_populates='course')
 
     modules = relationship('Module',
@@ -26,7 +27,7 @@ class Module(Base):
     title = Column(String(40))
     description = Column(String(50))
     price = Column(Float)
-    
+
     courses = relationship('Course',
                            secondary='courses_modules',
                            back_populates='modules')

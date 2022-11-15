@@ -1,6 +1,4 @@
 from enum import Enum
-
-from fastapi import Form
 from pydantic import BaseModel, EmailStr, root_validator
 
 
@@ -42,7 +40,7 @@ class SignUp(SignIn):
 class User(UserBase):
     id: int
     password: str
-    active: str = False
+    active: bool = False
 
     class Config:
         orm_mode = True
